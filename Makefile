@@ -1,5 +1,9 @@
 .PHONY: certs
 
+install-prerequisites:
+	sudo find . -name *.sh -exec chmod +x {} + && \
+	cd Scripts && \
+	sudo ./00-install-prerequisites.sh
 
 variables:
 	cd Scripts && \
@@ -51,7 +55,7 @@ lab: setup start-gitlab start-vault start-keycloak
 	make start-runner
 
 # Only run 'all' if you have cloned the repository. This will rotate all of the CA certificates and generate new server certificates.
-all: ca-certs lab
+fresh: ca-certs lab
 
 purge:
 	docker compose -f ./GitLab/docker-compose.yml down -v
