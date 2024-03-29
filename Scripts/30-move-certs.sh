@@ -23,7 +23,7 @@ vaultConfigVolume="../Vault/volumes/config"
 vaultCertPath="$vaultConfigVolume/ssl"
 
 # Make the cert directories (recursively)
-for directory in $runnerCertPath $gitlabCertPath $vaultCertPath $registryCertPath
+for directory in $runnerCertPath $gitlabCertPath $vaultCertPath
 do
     mkdir -p $directory
 done

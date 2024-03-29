@@ -1,4 +1,4 @@
-.PHONY: build run start stop kill
+.PHONY: build get-registration-token stop remove purge certificates env run up dev-up start fast-register register unregister
 build:
 	./build.sh
 
@@ -25,8 +25,10 @@ env:
 run: certificates
 	./run.sh
 
-up: build certificates get-registration-token
+up: certificates get-registration-token
 	docker compose up -d
+
+dev-up: build up
 
 start:
 	docker compose start

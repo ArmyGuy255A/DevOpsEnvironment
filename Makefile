@@ -1,4 +1,4 @@
-.PHONY: certs
+.PHONY: install-prerequisites variables ca-certs certs setup start-gitlab stop-gitlab start-runner stop-runner start-keycloak stop-keycloak start-vault stop-vault stop start lab fresh purge
 
 install-prerequisites:
 	sudo find . -name *.sh -exec chmod +x {} + && \
@@ -46,6 +46,9 @@ start-vault:
 stop-vault:
 	docker compose -f ./Vault/docker-compose.yml stop
 
+stop: stop-gitlab stop-runner stop-keycloak stop-vault
+
+start: start-gitlab start-runner start-keycloak start-vault start-runner
 
 lab: setup start-gitlab start-vault start-keycloak 
 	# Wait 5 minutes for the services to start, tuen start the runner

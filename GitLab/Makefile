@@ -1,4 +1,4 @@
-.PHONY: run start stop kill
+.PHONY: stop up up-debug purge certificates follow dev-run
 
 stop:
 	docker compose stop

@@ -13,13 +13,14 @@
 
 # Getting Started
 
-## Using Make
+## Lab Environment (VM Provided)
 Running the make command will initialize a new environment with all the necessary prerequisites. Ensure this is running on a Debian based system. 
 
 `make lab` - This will generate new Server and Environment variable files and launch the lab environment
 `make purge` - This will remove all the containers and the volumes
+`make stop` - This will stop all the containers
+`make start` - This will start all the containers
 
 ### Fresh Environment (Only if cloned)
+`make install-prerequisites` - This will install all the necessary prerequisites
 `make fresh` - This will generate new CA certificates and launch the lab environment
-
-
