@@ -68,3 +68,6 @@ purge:
 	# remove all instance data
 	sudo find . -type d -name 'volumes' -exec rm -rf {} +
 	sudo find . -name '.env' -exec rm -rf {} +
+
+docker-clean:
+	docker system prune -a --volumes --force
