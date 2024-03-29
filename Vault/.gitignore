@@ -1,0 +1,5 @@
+.env
+volumes/*
+!volumes/.gitkeep
+config/*
+!config/.gitkeep
