@@ -1,22 +1,33 @@
 # Offine GitLab CI/CD
 
-
-
 ## URL's
 
 1. GitLab: [https://x.x.x.x:8443](http://localhost:8080)
 2. VS Code Server: [http://x.x.x.x:8080](http://localhost:8080)
+3. Harbor: [http://10.x.10.2](https://10.x.10.2)
 
-## Passwords
-1. GitLab: `root` / `1qa@WS3ed$RF5tg`
+## Usernames
+1. GitLab: `root`
+2. KeyCloak: `admin`
+3. Harbor: `admin`
 
 # Getting Started
 
+## Using Make
+Running the make command will initialize a new environment with all the necessary prerequisites. Ensure this is running on a Debian based system. 
+
+```bash
+    make all
+```
+
 ## Generating Certificates
 
-If this machine has been provided to you, it is likely that the root certificates have already been generated. If not, you can generate them by running the following command:
 
-### Certificate Authority
+### Make the Environment Variable Files
+
+If a machine has been provided to you, it is likely that the root certificates have already been generated.If not, you can generate them by running the following command:
+
+### Certificate Authority (Only if you cloned this repository)
 ```bash
     ./10-make-ca-certs.sh
 ```

@@ -8,6 +8,4 @@ services:
     ports:
       - 8080:8080
     command: start-dev
-    networks:
-      - gitlab
     hostname: '${HOST_IP}'
