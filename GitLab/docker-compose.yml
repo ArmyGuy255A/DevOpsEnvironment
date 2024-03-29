@@ -1,0 +1,26 @@
+services:
+  gitlab:
+    image: 'gitlab/gitlab-ee:16.10.0-ee.0'
+    restart: always
+    hostname: '${HOST_IP}'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://${HOST_IP}:8443'
+        gitlab_rails['gitlab_shell_ssh_port'] = 8822
+        gitlab_rails['initial_root_password'] = '${DEFAULT_PASSWORD}'
+        gitlab_rails['store_initial_root_password'] = true
+        registry_external_url 'https://${HOST_IP}:5050'
+        gitlab_rails['registry_enabled'] = true
+        letsencrypt['enable'] = false
+        nginx['ssl_certificate'] = "/etc/gitlab/ssl/${HOST_IP}.crt"
+        nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/${HOST_IP}.key"
+    ports:
+      - '80:80'
+      - '8443:8443'
+      - '8822:8822'
+      - '5050:5050'
+    volumes:
+      - ./volumes/config:/etc/gitlab
+      - ./volumes/logs:/var/log/gitlab
+      - ./volumes/data:/var/opt/gitlab
+    shm_size: '256m'
