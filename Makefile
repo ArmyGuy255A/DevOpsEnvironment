@@ -61,7 +61,7 @@ start: start-gitlab start-keycloak start-vault start-runner-dind start-runner-sh
 
 ssh: 
 	# Generate a new SSH key pair
-	rm ~/.ssh -rf
+	sudo rm ~/.ssh -rf
 	ssh-keygen -t rsa -b 4096 -C "toor@$$(ip addr show ens192 | grep "inet " | awk '{print $$2}' | cut -d/ -f1)" -N "" -f ~/.ssh/id_rsa
 
 git-config:
