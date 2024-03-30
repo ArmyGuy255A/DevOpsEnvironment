@@ -111,7 +111,7 @@ purge:
 	rm ~/.gitconfig -f
 	make iptables
 	make git-config
-	rm ~/.vscode-server/data/User/History/*
+	rm ~/.vscode-server/data/User/History/* -fdr
 
 docker-clean:
 	docker system prune -a --volumes --force
