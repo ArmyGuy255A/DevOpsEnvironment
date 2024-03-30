@@ -1,4 +1,5 @@
-domain="tsi.mil"
+domain=$(awk -F "=" '/^DOMAIN/ {print $2}' .domain)
+
 localCertDir="../certificates"
 
 mkdir -p $localCertDir

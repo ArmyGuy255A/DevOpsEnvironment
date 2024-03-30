@@ -1,9 +1,9 @@
 .PHONY: install-prerequisites variables ca-certs certs setup start-gitlab stop-gitlab start-runner stop-runner start-keycloak stop-keycloak start-vault stop-vault stop start lab fresh purge
 
 install-prerequisites:
-	sudo find . -name *.sh -exec chmod +x {} + && \
+	find . -name *.sh -exec chmod +x {} + && \
 	cd Scripts && \
-	sudo ./00-install-prerequisites.sh
+	./00-install-prerequisites.sh
 
 variables:
 	cd Scripts && \
@@ -11,7 +11,7 @@ variables:
 
 ca-certs:
 	cd Scripts && \
-	./10-make-ca-certs.sh
+	sudo ./10-make-ca-certs.sh
 
 certs:
 	cd Scripts && \
@@ -59,9 +59,13 @@ stop: stop-gitlab stop-keycloak stop-vault stop-runner-dind stop-runner-shell
 
 start: start-gitlab start-keycloak start-vault start-runner-dind start-runner-shell
 
+domain:
+	# Get the domain name
+	ip addr show ens192 | grep "inet " | awk '{print $$2}' | cut -d/ -f1
+
 ssh: 
 	# Generate a new SSH key pair
-	sudo rm ~/.ssh -rf
+	rm ~/.ssh -rf
 	ssh-keygen -t rsa -b 4096 -C "toor@$$(ip addr show ens192 | grep "inet " | awk '{print $$2}' | cut -d/ -f1)" -N "" -f ~/.ssh/id_rsa
 
 git-config:
@@ -74,7 +78,7 @@ git-phil:
 	git config --global user.email "mrdieppa@gmail.com"
 	git config --global user.name "Phil Dieppa"
 
-lab: ssh git-config setup start-gitlab start-vault start-keycloak iptables
+lab: ssh git-config setup start-gitlab start-vault start-keycloak
 	# Waiting for services to start... Then, registering a runner
 	# This will take about 5 minutes. Feel free to keep working. The runners will self-register when they're ready.
 	(sleep 300; make start-runner-dind; make start-runner-shell) &
@@ -83,13 +87,14 @@ lab: ssh git-config setup start-gitlab start-vault start-keycloak iptables
 fresh: ca-certs lab
 
 iptables:
-	# Enable SSH in case it was disabled
-	sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+	# Flush the IPTABLES
+	sudo iptables -F
+	sudo iptables -L
 
 purge:
 	# Remove all environment variable data
 	sudo find . -name '.env' -exec rm -rf {} +
-	sudo docker compose -f ./GitLab/docker-compose.yml down -v
+	docker compose -f ./GitLab/docker-compose.yml down -v
 	docker compose -f ./Runner-Dind/docker-compose.yml down -v
 	docker compose -f ./Runner-Shell/docker-compose.yml down -v
 	docker compose -f ./KeyCloak/docker-compose.yml down -v

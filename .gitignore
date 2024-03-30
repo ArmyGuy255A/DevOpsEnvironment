@@ -3,3 +3,4 @@ certificates/*
 */volumes/*
 */config/*
 .env
+.domain
