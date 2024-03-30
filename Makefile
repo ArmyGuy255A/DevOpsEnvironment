@@ -42,7 +42,8 @@ stop-runner-shell:
 	docker compose -f ./Runner-Shell/docker-compose.yml stop
 
 start-keycloak:
-	docker compose -f ./KeyCloak/docker-compose.yml up -d
+	cd KeyCloak && \
+	make up
 
 stop-keycloak:
 	docker compose -f ./KeyCloak/docker-compose.yml stop
