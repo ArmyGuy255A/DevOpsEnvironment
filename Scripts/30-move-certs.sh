@@ -8,9 +8,13 @@ gitlabFQDN="localhost"
 gitlabConfigVolume="../GitLab/volumes/config"
 gitlabCertPath="$gitlabConfigVolume/ssl"
 
-#RUNNER
-runnerConfigVolume="../Runner/volumes/config"
-runnerCertPath="$runnerConfigVolume/certs"
+#RUNNER-DIND
+runnerDindConfigVolume="../Runner-Dind/volumes/config"
+runnerDindCertPath="$runnerDindConfigVolume/certs"
+
+#RUNNER-SHELL
+runnerShellConfigVolume="../Runner-Shell/volumes/config"
+runnerShellCertPath="$runnerShellConfigVolume/certs"
 
 #REGISTRY
 registryFQDN="tsi.mil"
@@ -18,12 +22,17 @@ registryConfigVolume="../Registry/volumes/config"
 registryCertPath="$registryConfigVolume/ssl"
 
 #VAULT
-vaultFQDN="vault14.tsi.mil"
+vaultFQDN="server"
 vaultConfigVolume="../Vault/volumes/config"
 vaultCertPath="$vaultConfigVolume/ssl"
 
+#KEYCLOAK
+keycloakFQDN="server"
+keycloakConfigVolume="../KeyCloak/volumes"
+keycloakCertPath="$keycloakConfigVolume/truststores"
+
 # Make the cert directories (recursively)
-for directory in $runnerCertPath $gitlabCertPath $vaultCertPath
+for directory in $runnerDindCertPath $runnerShellCertPath $gitlabCertPath $vaultCertPath $keycloakCertPath
 do
     mkdir -p $directory
 done
@@ -43,8 +52,21 @@ cp $localCertDir/*.$domain.key $gitlabCertPath/$HOST_IP.key
 # docker compose -f Server/docker-compose.yml up -d
 
 #copy the tsi.mil.crt to ca.crt on the runner
-cp $localCertDir/$domain.crt $runnerCertPath/ca.crt
-cp $localCertDir/\*.$domain.crt $runnerCertPath
+cp $localCertDir/$domain.crt $runnerDindCertPath/ca.crt
+cp $localCertDir/*.$domain.crt $runnerDindCertPath
+
+cp $localCertDir/$domain.crt $runnerShellCertPath/ca.crt
+cp $localCertDir/*.$domain.crt $runnerShellCertPath
+
+# Copy certs for Vault
+cp $localCertDir/$domain.crt $vaultCertPath/ca.crt
+cp $localCertDir/*.$domain.crt $vaultCertPath/server.crt
+cp $localCertDir/*.$domain.key $vaultCertPath/server.key
+
+# Copy certs for KeyCloak
+cp $localCertDir/$domain.crt $keycloakCertPath/ca.crt
+cp $localCertDir/*.$domain.crt $keycloakCertPath/server.crt
+cp $localCertDir/*.$domain.key $keycloakCertPath/server.key
 
 # #Restart the runner
 # docker compose -f Runner/docker-compose.yml down

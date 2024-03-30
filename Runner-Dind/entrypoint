@@ -62,7 +62,7 @@ if $REGISTER_RUNNER && [ -n "$GITLAB_URL" ] && [ -n "$GITLAB_REGISTRATION_TOKEN"
     --ssh-port "$SSH_PORT"
 fi
 
-trap cleanup INT TERM SIGTERM
+trap cleanup INT TERM SIGTERM SIGQUIT
 # trap 'cleanup; exit 130' INT
 # trap 'cleanup; exit 143' TERM
 

@@ -5,7 +5,12 @@ services:
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=${DEFAULT_PASSWORD}
+      - KC_HTTPS_KEY_STORE_FILE=/opt/keycloak/conf/truststores/keystore.jks
+      - KC_HTTPS_KEY_STORE_PASSWORD=${DEFAULT_PASSWORD}
+      - KC_HOSTNAME=${HOST_IP}
+    volumes:
+      - ./volumes/truststores:/opt/keycloak/conf/truststores
     ports:
-      - 8080:8080
+      - 7443:8443
     command: start-dev
     hostname: '${HOST_IP}'

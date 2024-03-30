@@ -13,7 +13,7 @@ rm powershell_7.4.1-1.deb_amd64.deb
 # Install system dependencies
 apt-get update 
 apt-get install -y curl unzip git sudo nano make ruby ruby-dev build-essential libx11-xcb1 libxcb-dri3-0 libdrm2 libgbm1 libxshmfence1 libasound2 bash-completion apt-transport-https ca-certificates gnupg lsb-release python3 python3-pip dos2unix whois
-apt-get install -y locate
+apt-get install -y locate openjdk-17-jdk
 
 # Prettify the bash terminal, Clone nord dircolors repository
 git clone https://github.com/arcticicestudio/nord-dircolors.git

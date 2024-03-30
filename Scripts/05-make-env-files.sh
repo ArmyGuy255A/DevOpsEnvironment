@@ -8,7 +8,7 @@ read DEFAULT_PASSWORD
 #If there is a $ in the password, add another $ to escape it
 DEFAULT_PASSWORD=$(echo $DEFAULT_PASSWORD | sed 's/\$/\$\$/g')
 
-for service in "Runner" "Runner-Helper" "Vault" "KeyCloak" "GitLab"
+for service in "Runner-Dind" "Runner-Shell" "Vault" "KeyCloak" "GitLab"
 do
     echo "Making .env file for $service"
     echo "HOST_IP=$HOST_IP" > ../$service/.env

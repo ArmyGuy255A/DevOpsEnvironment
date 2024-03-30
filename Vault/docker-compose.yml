@@ -1,6 +1,6 @@
 services:
   vault:
-    image: hashicorp/vault
+    image: hashicorp/vault:latest
     ports:
       - "8200:8200"
     restart: "always"

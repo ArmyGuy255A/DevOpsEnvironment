@@ -1,5 +1,5 @@
 services:
-  gitlab-runner:
+  gitlab-runner-dind:
     image: armyguy255a/gitlab-runner-dind:latest
     restart: "no"
     environment:
@@ -7,7 +7,7 @@ services:
       - GITLAB_URL=https://$HOST_IP:8443
       - GITLAB_REGISTRATION_TOKEN=$REGISTRATION_TOKEN
       - DEFAULT_IMAGE=gitlab/gitlab-runner-helper:ubuntu-x86_64-v14.10.2-pwsh
-      - TAG_LIST=docker,dind,atmos,pwsh,ubuntu,bash
+      - TAG_LIST=docker,dind,atmos
       - SSH_PORT="8443"
       - EXECUTOR=docker
     volumes:
@@ -15,6 +15,4 @@ services:
       - ./volumes/home:/home/gitlab-runner
       - /var/run/docker.sock:/var/run/docker.sock
       - ./volumes/.docker/machine:/root/.docker/machine
-    ports:
-      - 8093:8093
     command: run

@@ -1,6 +1,4 @@
 .PHONY: build get-registration-token stop remove purge certificates env run up dev-up start fast-register register unregister
-build:
-	./build.sh
 
 get-registration-token:
 	# Get registration token from GitLab
@@ -9,7 +7,7 @@ get-registration-token:
 stop:
 	docker compose stop
 
-remove:
+down:
 	docker compose down
 
 purge:
@@ -28,7 +26,7 @@ run: certificates
 up: certificates get-registration-token
 	docker compose up -d
 
-dev-up: build up
+dev-up: up
 
 start:
 	docker compose start
