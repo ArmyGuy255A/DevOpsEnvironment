@@ -15,10 +15,12 @@ purge:
 	sudo rm -rf volumes
 
 certificates:
-	../Scripts/30-move-certs.sh
+	cd ../Scripts && \
+	./30-move-certs.sh
 
 env:
-	../Scripts/05-make-env-files.sh
+	cd ../Scripts && \
+	./05-make-env-files.sh
 
 run: certificates
 	./run.sh

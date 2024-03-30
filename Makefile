@@ -1,4 +1,4 @@
-.PHONY: install-prerequisites variables ca-certs certs setup start-gitlab stop-gitlab start-runner stop-runner start-keycloak stop-keycloak start-vault stop-vault stop start lab fresh purge
+.PHONY: install-prerequisites variables ca-certs certs setup start-gitlab stop-gitlab start-runner-dind stop-runner-dind start-runner-shell stop-runner-shell start-keycloak stop-keycloak start-vault stop-vault stop start domain ssh git-config git-phil lab fresh iptables purge docker-clean
 
 install-prerequisites:
 	find . -name *.sh -exec chmod +x {} + && \
@@ -89,8 +89,11 @@ fresh: ca-certs lab
 iptables:
 	# Flush the IPTABLES
 	sudo iptables -F
+	sudo systemctl restart docker
+	sudo systemctl restart k3s
+	sleep 5
 	sudo iptables -L
-
+	
 purge:
 	# Remove all environment variable data
 	sudo find . -name '.env' -exec rm -rf {} +
@@ -107,6 +110,10 @@ purge:
 	git credential-cache exit
 	rm ~/.gitconfig -f
 	make iptables
+	make git-config
+	rm ~/.vscode-server/data/User/History/*
 
 docker-clean:
 	docker system prune -a --volumes --force
+
+clean: purge docker-clean
