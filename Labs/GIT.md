@@ -85,3 +85,5 @@
    git merge main
    ```
 
+### Next Lesson
+Proceed to [Lab 2 - GitLab Basics](GITLAB.md) to learn about server-based version control with GitLab.
