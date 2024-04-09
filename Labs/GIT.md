@@ -12,6 +12,12 @@
 
 2. **Download and Install Git:** Go to [git-scm.com](https://git-scm.com/) and download the version appropriate for your operating system. Follow the installation instructions.
 
+3. **Setup your User Information:**
+```bash
+	git config --global user.email "someone@example.com"
+	git config --global user.name "Some One"
+```
+
 ### Initialize a New Git Repository
 
 1. **Create a New Folder:** Create a folder where you want your new Git repository to be.
