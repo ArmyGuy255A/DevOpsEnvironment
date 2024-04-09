@@ -116,4 +116,6 @@ purge:
 docker-clean:
 	docker system prune -a --volumes --force
 
+up: start-gitlab start-vault start-keycloak start-runner-dind start-runner-shell
+
 clean: purge docker-clean
