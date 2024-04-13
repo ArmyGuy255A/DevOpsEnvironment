@@ -22,6 +22,13 @@ cp ca.crt ./volumes/config/ca.crt
 cp server.crt ./volumes/config/server.crt
 cp server.key ./volumes/config/server.key
 ```
+## Running
+
+Just docker compose up!
+
+```bash
+docker-compose up -d
+```
 
 ## Contributing
 
