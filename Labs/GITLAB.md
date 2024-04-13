@@ -27,9 +27,27 @@
    git clone <https-repository-URL>
    ```
 
+#### Special note on Self-Hosted GitLab Instances
+You may need to trust the self-signed certificate of your GitLab instance before you can clone the repository. To do this, run the following command before cloning:
+
+Option 1: Disable SSL Verify (Not Recommended for Production)
+```bash
+git config --global http.sslVerify false
+```
+
+Option 2 (Linux): Trust the Self-Signed Certificate
+```bash
+echo -n | openssl s_client -connect 10.14.10.196:8443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /usr/local/share/ca-certificates/gitlab.crt
+git config --global http.sslCAInfo /usr/local/share/ca-certificates/gitlab.crt
+sudo update-ca-certificates
+```
+
+Option 2 (Windows): Easiest to just use SSH using the steps below.
+
 2. **Set Up SSH (if needed):** If you don't have an SSH key, generate one:
    ```bash
    ssh-keygen
+   cat ~\.ssh\id_rsa.pub
    ```
    Follow the prompts, then add your SSH key to GitLab under user settings.
 
