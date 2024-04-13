@@ -17,6 +17,7 @@ certificates:
 	cd ../Scripts && \
 	./30-move-certs.sh
 	./make-keystore.sh
+	./add-certs-to-keystore.sh
 	rm ./volumes/truststores/ca.crt ./volumes/truststores/server.crt ./volumes/truststores/server.key
 
 up: certificates

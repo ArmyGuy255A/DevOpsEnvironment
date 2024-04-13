@@ -106,6 +106,26 @@ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scrip
     rm get_helm.sh
 echo "source <(helm completion bash)" >> ~/.bashrc
 
+# Allow Docker to be accessed via HTTP
+# File path to the Docker service file
+DOCKER_SERVICE_FILE="/lib/systemd/system/docker.service"
+
+# Text to add if not already present
+TCP_SETTING="-H tcp://0.0.0.0:2375"
+
+# Check if the setting is already in the file
+if ! grep -q "ExecStart=.*$TCP_SETTING" "$DOCKER_SERVICE_FILE"; then
+    # It's not in the file, so let's add it
+    sudo sed -i "/ExecStart=\/usr\/bin\/dockerd/ s/$/ $TCP_SETTING/" "$DOCKER_SERVICE_FILE"
+
+    # Reload systemd and restart Docker service
+    sudo systemctl daemon-reload
+    sudo systemctl restart docker.service
+
+    echo "Docker service updated and restarted."
+else
+    echo "TCP setting already configured."
+fi
 
 # Enable kubectl bash completion
 echo "source /usr/share/bash-completion/bash_completion" >> ~/.bashrc && \
